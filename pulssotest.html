@@ -8,11 +8,19 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="root"></div>
-  
-  
-  
-  
+  <div id="root">
+    <div style="min-height:100vh;display:grid;place-items:center;background:#07131c;color:#fff;font-family:system-ui,sans-serif;">
+      Cargando PULSSO...
+    </div>
+  </div>
+  <script>
+    window.addEventListener('load', function () {
+      const root = document.getElementById('root');
+      if (root && root.children.length === 0) {
+        root.innerHTML = '<div style="min-height:100vh;display:grid;place-items:center;background:#07131c;color:#fff;font-family:system-ui,sans-serif;">PULSSO no pudo cargar. Revisa la consola del navegador.</div>';
+      }
+    });
+  </script>
   <script type="module" src="app.js"></script>
   <script src="explanation.js"></script>
   <script src="support.js"></script>

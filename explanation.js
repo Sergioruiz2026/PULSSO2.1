@@ -97,10 +97,15 @@ function updateExplanation() {
 }
 
 if (!updateExplanation()) {
+  const rootNode = document.getElementById("root");
+  if (!rootNode) {
+    return;
+  }
+
   const observer = new MutationObserver(() => {
     if (updateExplanation()) {
       observer.disconnect();
     }
   });
-  observer.observe(document.getElementById("root"), { childList: true, subtree: true });
+  observer.observe(rootNode, { childList: true, subtree: true });
 }

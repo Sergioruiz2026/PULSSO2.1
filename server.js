@@ -18,8 +18,15 @@ const mimeTypes = {
 http
   .createServer((request, response) => {
     const requestedPath = decodeURIComponent(request.url.split("?")[0]);
-    const relativePath = requestedPath === "/" ? "/pulssotest.html" : requestedPath;
+    const relativePath = requestedPath === "/" ? "/index.html" : requestedPath;
     const filePath = path.join(root, relativePath);
+
+    if (requestedPath === "/" && !fs.existsSync(filePath)) {
+      const fallbackFile = path.join(root, "/pulssotest.html");
+      if (fs.existsSync(fallbackFile)) {
+        filePath = fallbackFile;
+      }
+    }
 
     if (!filePath.startsWith(root)) {
       response.writeHead(403);
