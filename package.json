@@ -1,0 +1,25 @@
+{
+  "name": "pulsso2.1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sergioruiz2026/PULSSO2.1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Sergioruiz2026/PULSSO2.1/issues"
+  },
+  "homepage": "https://github.com/Sergioruiz2026/PULSSO2.1#readme",
+  "dependencies": {
+    "playwright": "^1.62.1"
+  }
+}
