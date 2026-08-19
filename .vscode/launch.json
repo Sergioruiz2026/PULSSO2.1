@@ -23,6 +23,29 @@
             "request": "launch",
             "name": "Open pulssotest.html",
             "file": "c:\\PULSSO2.1\\pulssotest.html"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "PULSSO: servidor local",
+            "program": "${workspaceFolder}/server.js",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "PULSSO: navegador local",
+            "url": "http://localhost:8000",
+            "webRoot": "${workspaceFolder}"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "PULSSO: ejecutar",
+            "configurations": [
+                "PULSSO: servidor local",
+                "PULSSO: navegador local"
+            ]
         }
     ]
 }
