@@ -1,10 +1,10 @@
 const explanationText = "PASO 1\nMarcas cómo estás hoy.\n\nPASO 2\nEliges a las personas que forman tu red de apoyo.\n\nPASO 3\nSi dejas de entrar durante tres días, PULSSO avisa a tu red para que pueda preguntarte cómo estás.\n\nPASO 4\nPuedes responder con voz o por WhatsApp.\n\nIMPORTANTE\nPULSSO no es terapia, no reemplaza a profesionales de la salud y no diagnostica. Solo te ayuda a no estar solo o sola en momentos difíciles.\n\nRED DE APOYO\nContactos MINSAL. Crisis o riesgo inmediato: llama al *4141, Salud Responde al 600 360 7777 o a la Línea de Prevención del Suicidio.";
 const titleText = "Demo de cómo funciona PULSSO";
-const pilotText = "Piloto INACAP VALPARAISO";
+const pilotText = "Piloto estudiantes INACAP";
 
 function configureVoiceButton(title) {
   const voiceButton = [...document.querySelectorAll("button")].find(
-    (element) => element.textContent.includes("Escuchar cómo funciona PULSSO con voz")
+    (element) => /Escuchar.*(PULSSO|simulación).*voz/i.test(element.textContent)
   );
 
   if (!voiceButton || voiceButton.dataset.fullExplanationVoice === "true") {
@@ -64,7 +64,7 @@ function updateExplanation() {
     (element) => element.textContent.trim() === "Solo para el piloto UDD / U de Chile"
   );
   const title = [...document.querySelectorAll("div")].find(
-    (element) => element.textContent.trim() === titleText
+    (element) => [titleText, "Demo de cómo funciona"].includes(element.textContent.trim())
   );
   const explanation = [...document.querySelectorAll("div")].find(
     (element) => element.dataset.pulssoExplanation === "true" ||
@@ -72,11 +72,15 @@ function updateExplanation() {
   );
 
   if (pilot) {
-    pilot.textContent = pilotText;
+    if (pilot.textContent.trim() !== pilotText) {
+      pilot.textContent = pilotText;
+    }
   }
 
   if (title && explanation) {
-    explanation.textContent = explanationText;
+    if (explanation.textContent !== explanationText) {
+      explanation.textContent = explanationText;
+    }
     explanation.dataset.pulssoExplanation = "true";
     explanation.style.whiteSpace = "pre-line";
     title.style.display = "inline-flex";
@@ -90,7 +94,8 @@ function updateExplanation() {
       repeatedText.remove();
     }
 
-    return configureVoiceButton(title) && Boolean(pilot);
+    configureVoiceButton(title);
+    return Boolean(pilot);
   }
 
   return false;
@@ -98,14 +103,12 @@ function updateExplanation() {
 
 if (!updateExplanation()) {
   const rootNode = document.getElementById("root");
-  if (!rootNode) {
-    return;
+  if (rootNode) {
+    const observer = new MutationObserver(() => {
+      if (updateExplanation()) {
+        observer.disconnect();
+      }
+    });
+    observer.observe(rootNode, { childList: true, subtree: true });
   }
-
-  const observer = new MutationObserver(() => {
-    if (updateExplanation()) {
-      observer.disconnect();
-    }
-  });
-  observer.observe(rootNode, { childList: true, subtree: true });
 }
